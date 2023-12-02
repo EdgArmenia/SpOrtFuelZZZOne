@@ -46,6 +46,7 @@ class Product(models.Model):
         stripe_product_price = stripe.Price.create(product = stripe_product['id'], unit_amount = round(self.price*100), currency='rub')
         return stripe_product_price
 
+
 class BasketQuerySet(models.QuerySet):
     def total_sum(self):
         return sum(basket.sum() for basket in self)
@@ -61,6 +62,7 @@ class BasketQuerySet(models.QuerySet):
             }
             line_items.append(item)
         return line_items
+
 
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)

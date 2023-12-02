@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import DetailView
 from products.models import Product, ProductCategory, Basket
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
@@ -31,8 +33,10 @@ class CreateOrderView(TitleMixin, TemplateView):
 class ProductsListView(TitleMixin, ListView):
     model = Product
     template_name = 'products/products.html'
-    paginate_by = 9
+    paginate_by = 3
     title = 'Store - Каталог'
+
+
     def get_queryset(self):
         queryset = super(ProductsListView, self).get_queryset()
         category_id = self.kwargs.get('category_id')
@@ -42,6 +46,16 @@ class ProductsListView(TitleMixin, ListView):
         context = super(ProductsListView, self).get_context_data()
         context['categories'] = ProductCategory.objects.all()
         return context
+
+    def get_absolute_url(self):
+        return reverse("products:product_detail", kwargs={"pk": self.pk})
+
+
+class ProductDetailView(DetailView):
+    template_name = 'products/product_detail.html'
+    model = Product
+    queryset = Product.objects.all()
+    slug_field = "pk"
 
 @login_required
 def basket_add(request, product_id):

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProductDetail</title>
+</head>
+<body>
+{% block title %}  {{product.title}} {% endblock title %}
+{% block product %}
+{{product.name}}
+{{product.category}}
+{{product.description}}
+{{product.price}}
+{{product.cuanity}}
+<img src="{{product.image.url}}" alt="">
+{% endblock product %}
+</body>
+</html>

@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from orders.views import stripe_webhook_view
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name="index"),
